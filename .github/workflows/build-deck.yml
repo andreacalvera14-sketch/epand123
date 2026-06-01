@@ -1,0 +1,36 @@
+name: Build Epsilon Deck
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    name: Build Epsilon Deck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build .pptx with Marp
+        uses: docker://marpteam/marp-cli:latest
+        with:
+          args: epsilon-deck.md --pptx --allow-local-files -o Epsilon_CSA_Deck.pptx
+        env:
+          MARP_USER: root:root
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Epsilon_CSA_Deck
+          path: Epsilon_CSA_Deck.pptx
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Publish to Release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-deck
+          name: Latest Epsilon CSA Deck
+          files: Epsilon_CSA_Deck.pptx
