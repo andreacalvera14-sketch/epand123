@@ -7,26 +7,20 @@ permissions:
   contents: write
 jobs:
   build:
-    name: Build Epsilon Deck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Build .pptx with Marp
-        uses: docker://marpteam/marp-cli:latest
+      - uses: actions/setup-python@v5
         with:
-          args: epsilon-deck.md --pptx --allow-local-files -o Epsilon_CSA_Deck.pptx
-        env:
-          MARP_USER: root:root
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+          python-version: '3.11'
+      - run: pip install python-pptx
+      - run: python build_deck.py
+      - uses: actions/upload-artifact@v4
         with:
           name: Epsilon_CSA_Deck
           path: Epsilon_CSA_Deck.pptx
           retention-days: 30
           if-no-files-found: error
-
       - name: Publish to Release
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
