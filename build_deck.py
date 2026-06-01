@@ -36,7 +36,7 @@ FONT  = "Helvetica Neue"
 
 SLIDE_W      = Inches(13.333)
 SLIDE_H      = Inches(7.5)
-TOTAL_SLIDES = 8
+TOTAL_SLIDES = 9
 FOOTER_TEXT  = (
     "[Your Name]  \u00b7  Client Success Associate"
     "  \u00b7  Epsilon London  \u00b7  June 2026"
@@ -711,6 +711,118 @@ def slide_08_why(prs):
 
 
 # ---------------------------------------------------------------------------
+# Slide 9: Sources
+# ---------------------------------------------------------------------------
+
+def slide_09_sources(prs):
+    """Sources & methodology: three body sections + methodology callout."""
+    slide = blank_slide(prs)
+    content_y = add_slide_header(
+        slide,
+        "Sources \u0026 methodology",
+        slide_num=9,
+        subtitle=(
+            "Public sources informing the Epsilon context, brand styling,"
+            " and retail media frameworks in this deck"
+        ),
+    )
+
+    body_x = Inches(0.5)
+    body_w = Inches(12.3)
+
+    # ------------------------------------------------------------------ #
+    # Section 1 — Epsilon & retail media context
+    # ------------------------------------------------------------------ #
+    s1_y = content_y + Inches(0.05)
+    s1_h = Inches(1.95)
+    txBox1 = slide.shapes.add_textbox(body_x, s1_y, body_w, s1_h)
+    tf1 = txBox1.text_frame
+    tf1.word_wrap = True
+
+    p = tf1.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
+    run = p.add_run()
+    run.text = "Section 1 \u2014 Epsilon \u0026 retail media context"
+    _fmt_run(run, FONT, 13, True, False, BLACK)
+
+    s1_sources = [
+        "\u2014 Epsilon EMEA \u2014 Retail Media for Retailers  \u00b7  epsilon.com/emea/products-and-services/retail-media-network",
+        "\u2014 CitrusAd \u2014 Sponsored Product Ads  \u00b7  citrusad.com",
+        "\u2014 MediaPost \u2014 \u201cPublicis\u2019 Epsilon Unveils New \u0026 Improved Retail Media Platform\u201d",
+        "\u2014 New Digital Age \u2014 \u201cJohn Lewis debuts self-serve retail media platform\u201d",
+        "\u2014 More About Advertising \u2014 \u201cJohn Lewis partners with Epsilon for new retail media offer\u201d",
+        "\u2014 Publicis Groupe UK \u2014 Epsilon agency page",
+    ]
+    for line in s1_sources:
+        add_para(tf1, line, font_size=11, color=BLACK, space_before=Pt(3))
+
+    # ------------------------------------------------------------------ #
+    # Section 2 — Brand & visual design
+    # ------------------------------------------------------------------ #
+    s2_y = s1_y + s1_h + Inches(0.1)
+    s2_h = Inches(1.1)
+    txBox2 = slide.shapes.add_textbox(body_x, s2_y, body_w, s2_h)
+    tf2 = txBox2.text_frame
+    tf2.word_wrap = True
+
+    p = tf2.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
+    run = p.add_run()
+    run.text = "Section 2 \u2014 Brand \u0026 visual design"
+    _fmt_run(run, FONT, 13, True, False, BLACK)
+
+    s2_sources = [
+        "\u2014 Publicis Groupe brand palette (Pick Color Online)"
+        " \u2014 hex codes for Publicis Turquoise #00B0A3, Black, Grey",
+        "\u2014 Logotyp.us \u2014 Epsilon logo and monochrome aesthetic",
+        "\u2014 Publicis Groupe Media Kit \u2014 typography reference"
+        " (Gotham Narrow \u2192 Helvetica Neue fallback)",
+    ]
+    for line in s2_sources:
+        add_para(tf2, line, font_size=11, color=BLACK, space_before=Pt(3))
+
+    # ------------------------------------------------------------------ #
+    # Section 3 — Retail media operating frameworks
+    # ------------------------------------------------------------------ #
+    s3_y = s2_y + s2_h + Inches(0.1)
+    s3_h = Inches(0.9)
+    txBox3 = slide.shapes.add_textbox(body_x, s3_y, body_w, s3_h)
+    tf3 = txBox3.text_frame
+    tf3.word_wrap = True
+
+    p = tf3.paragraphs[0]
+    p.alignment = PP_ALIGN.LEFT
+    run = p.add_run()
+    run.text = "Section 3 \u2014 Retail media operating frameworks"
+    _fmt_run(run, FONT, 13, True, False, BLACK)
+
+    s3_sources = [
+        "\u2014 Standard retail media operating practices drawn from IAB UK, Digiday, Campaign, The Drum, and platform vendor playbooks (Amazon Ads, Pacvue, Skai, Profitero, CommerceIQ)",
+        "\u2014 Operational frameworks: MoSCoW prioritisation, Pareto (80/20), \u201coptions + recommendation\u201d escalation, RACI-style trackers",
+    ]
+    for line in s3_sources:
+        add_para(tf3, line, font_size=11, color=BLACK, space_before=Pt(3))
+
+    # ------------------------------------------------------------------ #
+    # Methodology callout — identical style to slides 3 & 4
+    # ------------------------------------------------------------------ #
+    callout_y = s3_y + s3_h + Inches(0.1)
+    callout_h = Inches(0.65)
+    add_callout(
+        slide,
+        "All performance figures in this deck are illustrative."
+        " Frameworks are drawn from Epsilon\u2019s public materials,"
+        " Publicis Groupe brand guidelines, and standard retail media"
+        " operating practices documented across IAB UK, Digiday,"
+        " and platform vendor playbooks.",
+        x=body_x,
+        y=callout_y,
+        w=body_w,
+        h=callout_h,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -725,6 +837,7 @@ def main():
     slide_06_comms(prs)
     slide_07_week(prs)
     slide_08_why(prs)
+    slide_09_sources(prs)
 
     output = "Epsilon_CSA_Deck.pptx"
     prs.save(output)
